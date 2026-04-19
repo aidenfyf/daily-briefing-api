@@ -81,26 +81,22 @@ async function generateDailyBriefing(weatherData, emailSummary, customPrompt = n
   const headlinesDigest = await filterHeadlinesByIndustry(headlines);
 
   // Use custom prompt if provided, otherwise use default template
-  const systemPrompt = customPrompt || `You are a business intelligence analyst. Create a morning briefing using this data:
+  
+async function generateDailyBriefing(weatherData, emailSummary, customPrompt = null) {
+  const response = await client.messages.create({
+    model: "claude-haiku-4-5-20241022",
+    max_tokens: 600,
+    messages: [
+      {
+        role: "user",
+        content: `Weather: ${weatherData}\n\nEmails: ${emailSummary}\n\nCreate a brief morning summary.`,
+      },
+    ],
+  });
 
-WEATHER:
-${weatherData}
-
-EMAIL RECAP (unread from last 12 hours):
-${emailSummary || "No new unread emails"}
-
-TOP 3 HEADLINES:
-${headlinesDigest}
-
-FORMAT RULES:
-- Numbered list (1., 2., 3., etc.)
-- One blank line between sections
-- Under 750 characters total
-- Minimal emojis
-- If there's a schedule conflict or urgent task, add ⚠️ at the end
-- No em dashes
-
-Create a cohesive briefing that ties weather, emails, and headlines into the user's day.`;
+  return response.content[0].type === "text" ? response.content[0].text : "";
+}
+  
 
   const response = await client.messages.create({
     model: "claude-haiku-4-5-20241022",

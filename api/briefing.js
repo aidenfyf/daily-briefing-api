@@ -77,7 +77,7 @@ If fewer than 3 relevant headlines exist, return only what's relevant. Keep summ
 }
 
 async function generateDailyBriefing(weatherData, emailSummary, customPrompt = null) {
-  const headlines = await fetchHeadlines();
+  const headlines = [];
   const headlinesDigest = await filterHeadlinesByIndustry(headlines);
 
   // Use custom prompt if provided, otherwise use default template

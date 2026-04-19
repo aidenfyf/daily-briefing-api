@@ -1,7 +1,0 @@
-{
-  "functions": {
-    "api/briefing.js": {
-      "runtime": "nodejs20.x"
-    }
-  }
-}

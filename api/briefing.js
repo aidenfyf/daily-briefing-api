@@ -15,8 +15,6 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Missing weather or emailSummary" });
   }
 
-content: `Create a brief morning briefing in plain text format (no markdown, no special formatting). Weather: ${weather}. Emails: ${emailSummary}. Keep it under 100 words.`,
-  
   try {
     const response = await client.messages.create({
       model: "claude-haiku-4-5",
@@ -24,7 +22,7 @@ content: `Create a brief morning briefing in plain text format (no markdown, no 
       messages: [
         {
           role: "user",
-          content: `Create a brief morning briefing. Weather: ${weather}. Emails: ${emailSummary}. Keep it under 100 words.`,
+          content: `Create a brief morning briefing in plain text (no markdown). Weather: ${weather}. Emails: ${emailSummary}. Keep it under 100 words.`,
         },
       ],
     });

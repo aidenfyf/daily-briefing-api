@@ -14,15 +14,19 @@ const NEWS_SOURCES = [
 
 async function fetchHeadlines() {
   const headlines = [];
+  const timeout = (promise, ms) => Promise.race([promise, new Promise(r => setTimeout(() => r(null), ms))]);
+
   for (const source of NEWS_SOURCES) {
     try {
-      const feed = await parser.parseURL(source.url);
-      feed.items.slice(0, 5).forEach((item) => {
-        headlines.push({
-          title: item.title,
-          source: source.name,
+      const feed = await timeout(parser.parseURL(source.url), 20000);
+      if (feed && feed.items) {
+        feed.items.slice(0, 5).forEach((item) => {
+          headlines.push({
+            title: item.title,
+            source: source.name,
+          });
         });
-      });
+      }
     } catch (error) {
       console.error(`Error fetching ${source.name}:`, error);
     }

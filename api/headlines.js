@@ -7,9 +7,9 @@ const client = new Anthropic({
 });
 
 const NEWS_SOURCES = [
-  { name: "TechCrunch", url: "http://feeds.techcrunch.com/TechCrunch/" },
-  { name: "Forbes", url: "https://www.forbes.com/feeds/homepage.xml" },
   { name: "HackerNews", url: "https://news.ycombinator.com/rss" },
+  { name: "Forbes", url: "https://www.forbes.com/feeds/homepage.xml" },
+  { name: "TheRundown", url: "https://www.therundown.com/rss" },
 ];
 
 async function fetchHeadlines() {
